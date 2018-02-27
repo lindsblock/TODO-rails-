@@ -1,50 +1,50 @@
 class ListsController < ApplicationController
-
   #GET
   def index
     @lists = List.all
   end
 
-#GET
+  #GET
   def show
     @list = List.find(params[:id])
   end
 
-#GET
+  #GET
   def new
     @list = List.new
   end
 
-#POST
-  def create
+  #GET
+	def edit
+    @list = List.find(params[:id])
+	end
+
+  #put
+	def update
+	  @list = List.find(params[:id])
+    if @list.update(lists_params)
+	    redirect_to lists_path
+	  else
+	    render :edit
+	  end
+	end
+
+  #POST
+	def create
     @list = List.new(lists_params)
 
-    if @list.save
-      redirect_to lists_path
-    else
-      render :new
-    end
-  end
+	  if @list.save
+	    redirect_to lists_path
+	  else
+	    render :new
+	  end
+	end
 
-#PUT
-def edit
-  @list = List.find(params[:id])
-end
 
-#PUT
-def update
-  @list = List.find(params[:id])
-  if @list.update(lists_params)
-    redirect_to lists_path
-  else
-    render :edit
-  end
-end
+	private
 
-  private
-
-  def lists_params
-    params.require(:list).permit(:title, :author, :body)
-  end
+	  def lists_params
+      params.require(:list).permit(:title, :author, :body)
+	  end
 
 end
